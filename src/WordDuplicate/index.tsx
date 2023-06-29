@@ -45,7 +45,7 @@ const WordDuplicate: FC<WordDuplicateProps> = (props) => {
 		return (
 			<Upload
 				multiple
-				action="http://localhost:3000/api/upload"
+				action="https://upload.clickapaas.com/api/upload"
 				accept=".docx"
 				fileName='file'
 				data={{ dirPath: "word-duplicate" }}
