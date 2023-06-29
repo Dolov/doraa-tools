@@ -28,15 +28,6 @@ const WordDuplicate: FC<WordDuplicateProps> = (props) => {
 		setFiles(fileList)
 	}
 
-	// const url = React.useMemo(() => {
-	// 	const base = `https://view.officeapps.live.com/op/view.aspx?src=`
-	// 	const file = files.find(item => item.uid === fileId)
-	// 	if (file?.status === 'success') {
-	// 		return `${base}${encodeURI(file.response.url)}`
-	// 	}
-	// 	return null
-	// }, [fileId, files])
-
   const file = React.useMemo(() => {
 		return files.find(item => item.uid === fileId)
 	}, [fileId, files])
@@ -45,14 +36,14 @@ const WordDuplicate: FC<WordDuplicateProps> = (props) => {
 		return (
 			<Upload
 				multiple
-				action="//file.clickapaas.com/api/upload"
+				action="https://file.clickapaas.com/api/upload"
 				accept=".docx"
 				fileName='file'
 				data={{ dirPath: "word-duplicate" }}
-				onPreviewClick={onPreviewClick}
 				onChange={onChange}
 				fileList={files}
 				className='cloumn-upload'
+				onPreviewClick={onPreviewClick}
 			>
 				{children}
 			</Upload>
