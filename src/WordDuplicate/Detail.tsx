@@ -98,12 +98,12 @@ const Detail: FC<DetailProps> = (props) => {
   const buttonText = getButtonText()
 
   return (
-    <div className="flex-1 ml-6 w-full overflow-auto">
+    <div className="flex-1 sm:ml-6 w-full overflow-auto">
       <div className="font-bold text-lg pl-4">
         <Text link={{ href: url!, target: "_blank" }} icon={<IconLink />} underline>{fileName}</Text>
       </div>
       <Divider margin='24px' />
-      <div className="pl-4">
+      <div className="sm:pl-4">
         <div className="font-bold my-6">适用于以下段落格式</div>
         <div className="my-6">
           <CheckboxGroup direction="vertical" value={[1, 2]}>
@@ -114,7 +114,7 @@ const Detail: FC<DetailProps> = (props) => {
         <div className="mt-8">
           <Button loading={loading} onClick={startCheck}>{buttonText}</Button>
         </div>
-        <div className="mt-6 mr-8">
+        <div className="mt-6 sm:mr-8">
           {noDuplicate && (
             <Banner className="text-left" bordered type="success" description="未检测到重复内容" closeIcon={null} />
           )}

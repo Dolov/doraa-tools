@@ -68,12 +68,12 @@ const WordDuplicate: FC<WordDuplicateProps> = (props) => {
   const hasFile = files.length > 0
 
 	return (
-		<div className='flex flex-1 p-6 overflow-auto'>
-			<div className={classnames("w-full", {"hidden": hasFile})}>
+		<div className='flex flex-col flex-1 p-6 overflow-auto sm:flex-row'>
+			<div className={classnames("h-full", "w-full", "flex", "items-center", {"hidden": hasFile})}>
 				<Empty description={emptyUploadButton} />	
 			</div>
 			{hasFile && (
-				<div className="w-64">{leftUploadButton}</div>
+				<div className="sm:w-64 w-full">{leftUploadButton}</div>
 			)}
 			{hasFile && <Detail file={file} />}
 		</div>
