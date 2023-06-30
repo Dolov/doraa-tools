@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { Divider, Button, Radio, RadioGroup, Badge, Tooltip, Toast, Typography, Banner } from '@douyinfe/semi-ui';
+import { Divider, Button, Checkbox, CheckboxGroup, Badge, Tooltip, Toast, Typography, Banner } from '@douyinfe/semi-ui';
 import { IconCopy, IconLink } from '@douyinfe/semi-icons'
 import { OnChangeProps } from '@douyinfe/semi-ui/lib/cjs/upload';
 import mammoth from 'mammoth'
@@ -13,8 +13,8 @@ export interface DetailProps {
 
 const Detail: FC<DetailProps> = (props) => {
   const { file } = props
-
   const [parseing, setParseing] = React.useState(false)
+
   const fileStatusRef = React.useRef<Record<string, {
     text: string,
     statistics: Record<string, number>
@@ -26,7 +26,7 @@ const Detail: FC<DetailProps> = (props) => {
       return `${base}${encodeURI(file.response.url)}`
     }
     return null
-  }, [file])
+  }, [file?.status])
 
   const parseWordData = (file: OnChangeProps["currentFile"]): Promise<string> => {
     return new Promise(resolve => {
@@ -56,6 +56,7 @@ const Detail: FC<DetailProps> = (props) => {
     const statistics = matches
       .filter(item => !item.startsWith("0"))
       .filter(item => item.length > 10)
+      .map(item => item.replace(/^\s+/, ''))
       .map(item => item.replace(/\d+[、\.]/, ''))
       .map(item => item.replace('\n', ''))
       .reduce((previousValue, currentValue) => {
@@ -97,29 +98,29 @@ const Detail: FC<DetailProps> = (props) => {
   const buttonText = getButtonText()
 
   return (
-    <div className="ml-6 w-full overflow-auto">
+    <div className="flex-1 ml-6 w-full overflow-auto">
       <div className="font-bold text-lg pl-4">
         <Text link={{ href: url!, target: "_blank" }} icon={<IconLink />} underline>{fileName}</Text>
       </div>
       <Divider margin='24px' />
       <div className="pl-4">
-        {/* <div className="font-bold my-6">段落起始格式</div>
+        <div className="font-bold my-6">适用于以下段落格式</div>
         <div className="my-6">
-          <RadioGroup direction="vertical">
-            <Radio value={1}>数字 + 、（例如：<span className="bg-orange-500">1、</span>下列各财务管理目标中，没有考虑风险因素的是）</Radio>
-            <Radio value={2}>数字 + .（例如：<span className="bg-orange-500">1.</span>下列各财务管理目标中，没有考虑风险因素的是）</Radio>
-          </RadioGroup>
-        </div> */}
+          <CheckboxGroup direction="vertical" value={[1, 2]}>
+            <Checkbox value={1}>数字 + 、（例如：<span className="bg-orange-500">1、</span>下列各财务管理目标中，没有考虑风险因素的是）</Checkbox>
+            <Checkbox value={2}>数字 + .（例如：<span className="bg-orange-500">1.</span>下列各财务管理目标中，没有考虑风险因素的是）</Checkbox>
+          </CheckboxGroup>
+        </div>
         <div className="mt-8">
           <Button loading={loading} onClick={startCheck}>{buttonText}</Button>
         </div>
         <div className="mt-6 mr-8">
           {noDuplicate && (
-            <Banner bordered type="success" description="未检测到重复内容" closeIcon={null} />
+            <Banner className="text-left" bordered type="success" description="未检测到重复内容" closeIcon={null} />
           )}
           {!noDuplicate && statistics && (
             <div>
-              <Banner bordered type="warning" description="检测结果可能存在误差，仅供参考！" closeIcon={null} />
+              <Banner className="text-left" bordered type="warning" description="检测结果可能存在误差，仅供参考！" closeIcon={null} />
               {Object.keys(statistics).map(item => {
                 const count = statistics[item]
                 return (

@@ -50,13 +50,18 @@ const WordDuplicate: FC<WordDuplicateProps> = (props) => {
 		)
 	}
 
-
-	const emptyButton = getUploadNode(
+	const emptyUploadButton = getUploadNode(
 		<Button>
 			<div className="flex items-center">
 				<Icon type="word" size={56} />
-				<span className="ml-2">暂无文件，立刻上传？</span>
+				<span className="ml-2">暂无文件，立即上传？</span>
 			</div>
+		</Button>
+	)
+
+	const leftUploadButton = getUploadNode(
+		<Button type="primary" icon={<IconUpload />} theme="light">
+			点击上传 word 文件
 		</Button>
 	)
 
@@ -64,21 +69,13 @@ const WordDuplicate: FC<WordDuplicateProps> = (props) => {
 
 	return (
 		<div className='flex flex-1 p-6 overflow-auto'>
-			<div className="w-64">
-				{getUploadNode(
-					<Button type="primary" icon={<IconUpload />} theme="light">
-						点击上传 word 文件
-					</Button>
-				)}
-			</div>
 			<div className={classnames("w-full", {"hidden": hasFile})}>
-				<Empty description={emptyButton} />	
+				<Empty description={emptyUploadButton} />	
 			</div>
 			{hasFile && (
-        <div className="flex flex-1">
-          <Detail file={file} />
-        </div>
-      )}
+				<div className="w-64">{leftUploadButton}</div>
+			)}
+			{hasFile && <Detail file={file} />}
 		</div>
 	)
 }
